@@ -57,7 +57,7 @@ public class BillLogic {
         return false;
     }
 
-    public void displayBillLists() {
+    public void displayBillLists(Bill[] bills) {
         if (checkEmptyBillList(bills)) {
             System.out.println("-------------------------");
             System.out.println("Danh sách hóa đơn rỗng");
@@ -198,14 +198,14 @@ public class BillLogic {
         return copyBillList;
     }
 
-    public void sortBillListByCustomerName() {
+    public Bill[] sortBillListByCustomerName() {
         Bill[] copyBillList;
 
         try {
             copyBillList = copyBillList(bills);
         } catch (NullPointerException e) {
             System.out.println("Danh sách hóa đơn rỗng.");
-            return;
+            return null;
         }
 
         if (copyBillList != null) {
@@ -223,23 +223,25 @@ public class BillLogic {
                 }
             }
         }
+
+        return copyBillList;
     }
 
-    public void sortBillListByQuantity() {
+    public Bill[] sortBillListByQuantity() {
         Bill[] copyBillList;
 
         try {
             copyBillList = copyBillList(bills);
         } catch (NullPointerException e) {
             System.out.println("Danh sách hóa đơn rỗng.");
-            return;
+            return null;
         }
 
         if (copyBillList != null) {
             for (int i = 0; i < copyBillList.length - 1; i++) {
                 boolean isSwap = false;
                 for (int j = i + 1; j < copyBillList.length; j++) {
-                    if (copyBillList[i] != null && copyBillList[j] != null && copyBillList[i].getCustomer().getName().compareTo(copyBillList[j].getCustomer().getName()) < 0) {
+                    if (copyBillList[i] != null && copyBillList[j] != null && sumQuantity(copyBillList[i]) < sumQuantity(copyBillList[j])) {
                         swap(copyBillList, i, j);
                         isSwap = true;
                     }
@@ -250,6 +252,16 @@ public class BillLogic {
                 }
             }
         }
+
+        return copyBillList;
+    }
+
+    private int sumQuantity(Bill bill) {
+        int sumQuantity = 0;
+        for (int i = 0; i < bill.getServiceDetails().length; i++) {
+            sumQuantity += bill.getServiceDetails()[i].getService().getUnit();
+        }
+        return sumQuantity;
     }
 
     private void swap(Bill[] bills, int i, int j) {

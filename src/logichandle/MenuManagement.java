@@ -1,5 +1,6 @@
 package logichandle;
 
+import entity.Bill;
 import utilities.PrintMessageUtility;
 import utilities.ScannerUtility;
 
@@ -31,19 +32,19 @@ public class MenuManagement {
                     billLogic.inputBillList();
                     break;
                 case 6:
-                    billLogic.displayBillLists();
+                    billLogic.displayBillLists(billLogic.getBills());
                     break;
                 case 7:
                     printSubmenu();
                     int subMenuChoice = chooseSubmenuChoice();
                     switch (subMenuChoice) {
                         case 1:
-                            billLogic.sortBillListByCustomerName();
-                            billLogic.displayBillLists();
+                            Bill[] sortedByName = billLogic.sortBillListByCustomerName();
+                            billLogic.displayBillLists(sortedByName);
                             break;
                         case 2:
-                            billLogic.sortBillListByQuantity();
-                            billLogic.displayBillLists();
+                            Bill[] sortedByQuantity = billLogic.sortBillListByQuantity();
+                            billLogic.displayBillLists(sortedByQuantity);
                             break;
                         default:
                             System.out.println("Lựa chọn không hợp lệ");

@@ -39,6 +39,8 @@ public class Bill implements Displayable {
                 newServiceDetails[i] = serviceDetails[i];
             }
         }
+
+        this.serviceDetails = newServiceDetails;
     }
 
     @Override
